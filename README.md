@@ -11,9 +11,9 @@ As an example, the `spaceflights` pipeline (Kedro starter) can be written as fol
 pb = PipelineBuilder()
 preprocessed_companies = pb.call(preprocess_companies, 'companies', name='preprocess_companies_node')
 preprocessed_shuttles = pb.call(preprocess_shuttles, 'shuttles', name='preprocess_shuttles_node')
-model_input_table = pb.call(create_model_input_table, "preprocessed_shuttles", 
-                            "preprocessed_companies", "reviews", name='create_model_input_table_node')
-X_train, X_test, y_train, y_test = pb.call(split_data, "model_input_table", "params:model_options", 
+model_input_table = pb.call(create_model_input_table, preprocessed_shuttles, 
+                            preprocessed_companies, "reviews", name='create_model_input_table_node')
+X_train, X_test, y_train, y_test = pb.call(split_data, model_input_table, "params:model_options", 
                                            name="split_data_node")
 regressor = pb.call(train_model, X_train, y_train, name="train_model_node")
 pb.call(evaluate_model, regressor, X_test, y_test, name="evaluate_model_node")
