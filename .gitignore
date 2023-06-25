@@ -1,0 +1,4 @@
+.conda
+.vscode
+example*.json
+__pycache__
